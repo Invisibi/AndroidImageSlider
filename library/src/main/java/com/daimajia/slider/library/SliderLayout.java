@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -37,6 +38,8 @@ import com.daimajia.slider.library.Tricks.InfiniteViewPager;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -85,6 +88,12 @@ import java.util.TimerTask;
 public class SliderLayout extends RelativeLayout {
 
     private Context mContext;
+    /**
+     * Cache OnPageChangeListeners
+     */
+
+    private List<ViewPagerEx.OnPageChangeListener> onPageChangeListeners = new ArrayList<>();
+
     /**
      * InfiniteViewPager is extended from ViewPagerEx. As the name says, it can scroll without bounder.
      */
@@ -223,12 +232,14 @@ public class SliderLayout extends RelativeLayout {
 
     public void addOnPageChangeListener(ViewPagerEx.OnPageChangeListener onPageChangeListener) {
         if (onPageChangeListener != null) {
+            onPageChangeListeners.add(onPageChangeListener);
             mViewPager.addOnPageChangeListener(onPageChangeListener);
         }
     }
 
     public void removeOnPageChangeListener(ViewPagerEx.OnPageChangeListener onPageChangeListener) {
         mViewPager.removeOnPageChangeListener(onPageChangeListener);
+        onPageChangeListeners.remove(onPageChangeListener);
     }
 
     public void setCustomIndicator(PagerIndicator indicator) {
@@ -693,6 +704,30 @@ public class SliderLayout extends RelativeLayout {
     }
 
     public void setCurrentPosition(int position) {
+        for (final ViewPagerEx.OnPageChangeListener onPageChangeListener : onPageChangeListeners) {
+            mViewPager.removeOnPageChangeListener(onPageChangeListener);
+        }
+        mViewPager.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int state) {
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    mViewPager.removeOnPageChangeListener(this);
+                    for (final ViewPagerEx.OnPageChangeListener onPageChangeListener : onPageChangeListeners) {
+                        mViewPager.addOnPageChangeListener(onPageChangeListener);
+                    }
+                }
+            }
+        });
         setCurrentPosition(position, true);
     }
 
