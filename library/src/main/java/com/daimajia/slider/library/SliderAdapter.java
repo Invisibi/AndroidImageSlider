@@ -106,4 +106,7 @@ public class SliderAdapter extends PagerAdapter implements BaseSliderView.ImageL
         }
     }
 
+    public ArrayList<BaseSliderView> getSlideViews() {
+        return mImageContents;
+    }
 }

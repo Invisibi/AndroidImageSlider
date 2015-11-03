@@ -37,6 +37,7 @@ import com.daimajia.slider.library.Tricks.InfiniteViewPager;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -243,6 +244,10 @@ public class SliderLayout extends RelativeLayout {
 
     public <T extends BaseSliderView> void addSlider(T imageContent) {
         mSliderAdapter.addSlider(imageContent);
+    }
+
+    public List<BaseSliderView> getSlideViews() {
+        return mSliderAdapter.getSlideViews();
     }
 
     private android.os.Handler mh = new android.os.Handler() {
