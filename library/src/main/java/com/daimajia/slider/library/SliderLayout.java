@@ -17,6 +17,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Transformers.AccordionTransformer;
 import com.daimajia.slider.library.Transformers.BackgroundToForegroundTransformer;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
+import com.daimajia.slider.library.Transformers.BubboeTransformer;
 import com.daimajia.slider.library.Transformers.CubeInTransformer;
 import com.daimajia.slider.library.Transformers.DefaultTransformer;
 import com.daimajia.slider.library.Transformers.DepthPageTransformer;
@@ -422,7 +423,8 @@ public class SliderLayout extends RelativeLayout {
         Tablet("Tablet"),
         ZoomIn("ZoomIn"),
         ZoomOutSlide("ZoomOutSlide"),
-        ZoomOut("ZoomOut");
+        ZoomOut("ZoomOut"),
+        Bubboe("Bubboe");
 
         private final String name;
 
@@ -541,6 +543,9 @@ public class SliderLayout extends RelativeLayout {
                 break;
             case ZoomOut:
                 t = new ZoomOutTransformer();
+                break;
+            case Bubboe:
+                t = new BubboeTransformer();
                 break;
         }
         setPagerTransformer(true, t);
