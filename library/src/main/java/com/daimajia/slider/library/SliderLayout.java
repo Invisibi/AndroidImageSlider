@@ -223,6 +223,10 @@ public class SliderLayout extends RelativeLayout {
         }
     }
 
+    public void setSliderOffScreenPageLimit(final int offScreenPageLimit) {
+        mViewPager.setOffscreenPageLimit(offScreenPageLimit);
+    }
+
     public void addOnPageChangeListener(ViewPagerEx.OnPageChangeListener onPageChangeListener) {
         if (onPageChangeListener != null) {
             mViewPager.addOnPageChangeListener(onPageChangeListener);
