@@ -244,13 +244,13 @@ public abstract class BaseSliderView {
 
         switch (mScaleType) {
             case Fit:
-                rq.fit();
+                targetImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 break;
             case CenterCrop:
-                rq.fit().centerCrop();
+                targetImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 break;
             case CenterInside:
-                rq.fit().centerInside();
+                targetImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 break;
         }
 
